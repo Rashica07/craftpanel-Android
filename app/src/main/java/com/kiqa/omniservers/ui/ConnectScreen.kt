@@ -85,11 +85,22 @@ fun ConnectScreen(onConnect: (Pairing) -> Unit, onDemo: () -> Unit) {
         Column(Modifier.fillMaxWidth().staggerIn(3).animateContentSize(Motion.smooth()), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             if (!manual) {
                 OmniField(
-                    code, { code = it }, "Pairing code", mono = true,
+                    code,
+                    {
+                        if (Pairing.isBareToken(it)) {
+                            // Only the token was pasted: switch to the manual form with it filled in.
+                            token = it.trim(); if (host.isBlank()) host = defaultHost(); manual = true; code = ""
+                        } else code = it
+                    },
+                    "Pairing code", mono = true,
                     trailing = {
                         OmniText(
                             "Paste", style = OmniType.label, color = OmniColor.accentSoft,
-                            modifier = Modifier.pressable { clipboard.getText()?.text?.let { code = it } }.padding(8.dp),
+                            modifier = Modifier.pressable {
+                                clipboard.getText()?.text?.let {
+                                    if (Pairing.isBareToken(it)) { token = it.trim(); if (host.isBlank()) host = defaultHost(); manual = true } else code = it
+                                }
+                            }.padding(8.dp),
                         )
                     },
                 )
@@ -126,3 +137,7 @@ fun ConnectScreen(onConnect: (Pairing) -> Unit, onDemo: () -> Unit) {
     }
     }
 }
+
+/** The emulator reaches the computer it runs on at 10.0.2.2; real phones need the computer's own address. */
+private fun defaultHost(): String =
+    if (android.os.Build.HARDWARE.contains("ranchu") || android.os.Build.HARDWARE.contains("goldfish")) "10.0.2.2" else ""

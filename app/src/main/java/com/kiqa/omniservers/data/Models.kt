@@ -63,6 +63,12 @@ data class Pairing(val host: String, val port: Int, val token: String) {
     val label get() = "$host:$port"
 
     companion object {
+        /** True for a lone token like "cp_ab12…" (what people paste when they skip the JSON). */
+        fun isBareToken(text: String): Boolean {
+            val t = text.trim()
+            return t.startsWith("cp_") && t.length > 8 && t.none { it.isWhitespace() || it == '{' || it == '"' }
+        }
+
         /**
          * Reads the JSON the desktop app shows for pairing: {"host":"…","port":8642,"token":"cp_…"}.
          * Returns null for anything that is not that, so the UI can say "that doesn't look right".

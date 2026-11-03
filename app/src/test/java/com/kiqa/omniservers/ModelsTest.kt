@@ -58,4 +58,12 @@ class ModelsTest {
         assertNull(Pairing.parse("""{"host":"h","token":""}"""))
         assertNull(Pairing.parse("""{"host":"h","port":99999,"token":"t"}"""))
     }
+
+    @Test fun bareTokenIsRecognised() {
+        assertTrue(Pairing.isBareToken("cp_d1be1a10f78141aeb2df3a7328f1"))
+        assertTrue(Pairing.isBareToken("  cp_d1be1a10f78141aeb2df3a7328f1\n"))
+        assertFalse(Pairing.isBareToken("cp_short"))
+        assertFalse(Pairing.isBareToken("hello world"))
+        assertFalse(Pairing.isBareToken("""{"host":"h","token":"cp_d1be1a10f78141aeb2df3a7328f1"}"""))
+    }
 }
