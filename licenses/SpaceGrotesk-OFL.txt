@@ -1,0 +1,7 @@
+Space Grotesk — Copyright 2020 The Space Grotesk Project Authors
+(https://github.com/floriankarsten/space-grotesk)
+
+Licensed under the SIL Open Font License, Version 1.1:
+https://openfontlicense.org — bundled unmodified from the OMNIServers web app
+(public/fonts/space-grotesk-latin.woff2). The font may be used, bundled and
+redistributed with software; it may not be sold by itself.
