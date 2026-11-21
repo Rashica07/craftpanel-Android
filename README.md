@@ -1,3 +1,5 @@
+> **This project has moved to [OMNIServers](https://github.com/Rashica07/OMNIServers).** New releases, issues and development happen there. This repository stays online so existing installs keep working.
+
 # OMNIServers for Android
 
 Remote control for OMNIServers (Mac today; Windows/Linux when their Remote API lands), written in Kotlin + Jetpack Compose with a custom OMNI design system (no Material components).
